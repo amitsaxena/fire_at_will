@@ -102,7 +102,7 @@ def loader2(duration)
   end
 end
 
-region_data = config[:region_data]
+region_data = @config[:region_data]
 
 region_data.each do |data|
   next if data[:node_count] < 1
