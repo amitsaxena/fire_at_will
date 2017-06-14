@@ -2,6 +2,8 @@
 :aws_access_key_id: Your AWS_ACCESS_KEY_ID
 :aws_secret_access_key: Your AWS_SECRET_ACCESS_KEY
 :instance_type: t2.micro
+:ssm_role: "IAM Role used by SSM"
+:command_timeout: 18000
 :region_data:
 - :region: ap-south-1
   :ami_id: ami-995c23f6

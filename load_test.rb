@@ -6,24 +6,22 @@ require 'base64'
 require 'timeout'
 require 'yaml'
 
-config = YAML.load_file('config/config.yml')
+@config = YAML.load_file('config/config.yml')
 
 Aws.config.update({
-  :credentials => Aws::Credentials.new(config[:aws_access_key_id], config[:aws_secret_access_key])
+  :credentials => Aws::Credentials.new(@config[:aws_access_key_id], @config[:aws_secret_access_key])
 })
 
 def fire_region_nodes(region, count, key_pair_name, ami_id)
-  instance_type = config[:instance_type]
-
   ec2 = Aws::EC2::Resource.new(:region => region)
   instances = ec2.create_instances({
     :image_id => ami_id,
     :min_count => count,
     :max_count => count,
     :key_name => key_pair_name,
-    :instance_type => instance_type,
+    :instance_type => @config[:instance_type],
     :iam_instance_profile => {
-      :name => "loadtesting_via_ssm"
+      :name => @config[:ssm_role]
     },
     tag_specifications: [
       {
@@ -45,7 +43,7 @@ def fire_commands(region, instances, commands)
   resp = ssm.send_command({
     instance_ids: instances,
     document_name: "AWS-RunShellScript",
-    timeout_seconds: 18000,
+    timeout_seconds: @config[:command_timeout],
     parameters: {
       "commands" => commands,
     },
