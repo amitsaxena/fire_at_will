@@ -7,8 +7,9 @@ WORKDIR /home/loadtest
 # Install any needed packages
 RUN gem install aws-sdk -v 2.9.39
 
-# COPY ruby script
+# COPY ruby script and config
 COPY load_test.rb .
+COPY config/config.yml config/config.yml
 
 # Copy .pem file to .ssh
 COPY config/*.pem /root/.ssh/
