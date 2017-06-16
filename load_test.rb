@@ -53,11 +53,12 @@ def fire_commands(region, instances, commands)
 end
 
 def print_command_output(command_id, region, instance)
+  puts "Trying to fetch output from instance id #{instance}..."
   ssm = Aws::SSM::Client.new(:region => region)
   res = ssm.get_command_invocation({:command_id => command_id, :instance_id => instance})
 
   while ["pending", "inprogress", "delayed"].include?(res.status_details.downcase)
-    sleep 10
+    loader2(10)
     res = ssm.get_command_invocation({:command_id => command_id, :instance_id => instance})
   end
 
@@ -68,6 +69,7 @@ def print_command_output(command_id, region, instance)
     puts res.standard_output_content
   else
     puts "Request failed with status: #{res.status_details}! Debug manually!"
+    puts res.standard_output_content if res.standard_output_content
   end
   puts "#"*80
 end
