@@ -10,10 +10,10 @@
   :key: mumbai-loadtesting
   :node_count: 3
   :commands:
-  - 'ab -k -c 10 -n 100 "http://example.com/"'
+  - 'ab -r -s 300 -c 10 -n 100 "http://example.com/"'
 - :region: us-east-1
   :ami_id: ami-34193d22
   :key: loadtesting
   :node_count: 2
   :commands:
-  - 'ab -k -c 10 -n 100 "http://example.com/"'
+  - 'ab -r -s 300 -c 10 -n 100 "http://example.com/" && ab -r -s 300 -c 10 -n 100 "http://example.com/new_url"'
