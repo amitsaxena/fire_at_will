@@ -9,11 +9,13 @@
   :ami_id: ami-995c23f6
   :key: mumbai-loadtesting
   :node_count: 3
+  :subnet_id: subnet-abcd1234
   :commands:
   - 'ab -r -s 300 -c 10 -n 100 "http://example.com/"'
 - :region: us-east-1
   :ami_id: ami-34193d22
   :key: loadtesting
   :node_count: 2
+  :subnet_id: subnet-abcd7890
   :commands:
   - 'ab -r -s 300 -c 10 -n 100 "http://example.com/" && ab -r -s 300 -c 10 -n 100 "http://example.com/new_url"'

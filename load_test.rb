@@ -12,7 +12,7 @@ Aws.config.update({
   :credentials => Aws::Credentials.new(@config[:aws_access_key_id], @config[:aws_secret_access_key])
 })
 
-def fire_region_nodes(region, count, key_pair_name, ami_id)
+def fire_region_nodes(region, count, key_pair_name, ami_id, subnet_id)
   ec2 = Aws::EC2::Resource.new(:region => region)
   instances = ec2.create_instances({
     :image_id => ami_id,
@@ -20,6 +20,7 @@ def fire_region_nodes(region, count, key_pair_name, ami_id)
     :max_count => count,
     :key_name => key_pair_name,
     :instance_type => @config[:instance_type],
+    :subnet_id => subnet_id,
     :iam_instance_profile => {
       :name => @config[:ssm_role]
     },
@@ -112,7 +113,7 @@ region_data = @config[:region_data]
 
 region_data.each do |data|
   next if data[:node_count] < 1
-  instance_objects = fire_region_nodes(data[:region], data[:node_count], data[:key], data[:ami_id])
+  instance_objects = fire_region_nodes(data[:region], data[:node_count], data[:key], data[:ami_id], data[:subnet_id])
   data[:instances] = instance_objects.map {|i| i.id}
 
   puts "#{data[:region]} Instances:"
