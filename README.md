@@ -334,3 +334,4 @@ Additionally please verify that all your EC2 instances have been successfuly ter
 Do What the Fuck You Want to License! Just that I do not accept any liability arising from it.
 
 In fact other people have thought about it as well and drafted it here: <a href="http://www.wtfpl.net/" target="_blank">WTFPL</a>
+test
